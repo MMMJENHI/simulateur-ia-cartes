@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulateur IA - Cartographie MachineLearnia</title>
+    <title>Simulateur IA - Cartographie Spatiale</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -15,184 +15,99 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
         }
 
         header {
-            text-align: center;
-            margin-bottom: 40px;
+            text-align: center; margin-bottom: 40px;
             border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 20px;
-            width: 85%;
-            max-width: 1200px;
+            padding-bottom: 20px; width: 85%; max-width: 1200px;
         }
 
-        header h1 {
-            color: var(--primary-color);
-            margin: 0 0 10px 0;
-            font-size: 2.2rem;
-            letter-spacing: 0.5px;
-        }
-
-        .author-tag {
-            color: #8a99ad;
-            font-size: 0.95rem;
-            margin-bottom: 5px;
-        }
-
-        .repo-link {
-            color: #566a85;
-            font-size: 0.85rem;
-            font-family: monospace;
-        }
+        h1 { color: var(--primary-color); margin: 0 0 10px 0; }
+        .author-tag { color: #8a99ad; margin-bottom: 5px; }
 
         .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            width: 85%;
-            max-width: 1200px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px; width: 85%; max-width: 1200px;
         }
 
         .card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px;
-            border-top: 4px solid var(--primary-color);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background-color: var(--card-bg); border-radius: 12px; padding: 25px;
+            border-top: 4px solid var(--primary-color); cursor: pointer;
+            transition: all 0.3s ease; box-shadow: 0 6px 12px rgba(0,0,0,0.4);
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 20px rgba(0, 210, 255, 0.25);
-            background-color: #1c253c;
-            border-top-color: var(--accent-color);
+            transform: translateY(-5px); box-shadow: 0 12px 20px rgba(0, 210, 255, 0.25);
+            background-color: #1c253c; border-top-color: var(--accent-color);
         }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            margin: 0;
-            color: var(--primary-color);
-            font-size: 1.3rem;
-        }
-
-        .badge {
-            background-color: #243b55;
-            color: #00d2ff;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
-        .card p {
-            color: #cbd5e1;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin: 0;
-        }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .badge { background-color: #243b55; color: #00d2ff; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; }
 
         .console-zone {
-            margin-top: 40px;
-            width: 85%;
-            max-width: 1200px;
-            background-color: #05070c;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.6);
+            margin-top: 40px; width: 85%; max-width: 1200px;
+            background-color: #05070c; border: 1px solid var(--border-color);
+            border-radius: 10px; padding: 25px; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6);
         }
 
-        .console-title {
-            color: #8a99ad;
-            margin-top: 0;
-            font-size: 1.05rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid #1e293b;
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-        }
-
-        .console-text {
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--accent-color);
-            line-height: 1.7;
-            white-space: pre-line;
-            font-size: 0.95rem;
-        }
+        .console-title { color: #8a99ad; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 15px; }
+        .console-text { font-family: 'Courier New', monospace; color: var(--accent-color); line-height: 1.7; white-space: pre-wrap; font-size: 0.95rem; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Simulateur d'Analyse IA par Cartes</h1>
+        <h1>Simulateur d'Analyse IA Dynamique</h1>
         <div class="author-tag">Expertise et Recherche : <strong>[NON...Jenhi.Mariame]</strong> | Faculté des Sciences - Fès</div>
-        <div class="repo-link">Target Repository: MachineLearnia/Python-Machine-Learning</div>
     </header>
 
     <div class="container">
-        <!-- Carte 01 -->
-        <div class="card" onclick="simulerAnalyse('Data Science Essentials (NumPy & Pandas)', '• Analyse des matrices à N dimensions (ndarrays).\n• Nettoyage des datasets, traitement des valeurs manquantes (NaN).\n• Normalisation des données et encodage des variables catégorielles.')">
+        <!-- Carte 1 : Exploration en Temps Réel -->
+        <div class="card" onclick="connecterEtAnalyser()">
             <div class="card-header">
-                <h3>NumPy & Pandas</h3>
-                <span class="badge">DECK 01</span>
+                <h3>Scanner le Dépôt Distant</h3>
+                <span class="badge">LIVE API</span>
             </div>
-            <p>Traitement de données massives, manipulation de matrices et préparation des structures de données.</p>
-        </div>
-
-        <!-- Carte 02 -->
-        <div class="card" onclick="simulerAnalyse('Algorithmes Scikit-Learn', '• Modélisation: Régression Linéaire, Logistique, et arbres de décision.\n• Algorithmes de Classification et Support Vector Machines (SVM).\n• Évaluation: Calcul de l\'erreur quadratique moyenne (MSE) et matrice de confusion.')">
-            <div class="card-header">
-                <h3>Scikit-Learn</h3>
-                <span class="badge">DECK 02</span>
-            </div>
-            <p>Mise en œuvre de modèles supervisés, entraînement, validation croisée et extraction de métriques de précision.</p>
-        </div>
-
-        <!-- Carte 03 -->
-        <div class="card" onclick="simulerAnalyse('Deep Learning de Zéro (Neural Networks)', '• Initialisation: Paramétrage des matrices de poids W1, W2 et des vecteurs de biais b1, b2.\n• Forward Propagation: Équations d\'activation Z1 = W1 • X + b1, suivies de ReLU ou Sigmoïde.\n• Backpropagation: Calcul des gradients dW, db et optimisation via Descente de Gradient.')">
-            <div class="card-header">
-                <h3>Réseaux de Neurones</h3>
-                <span class="badge">DECK 03</span>
-            </div>
-            <p>Modélisation mathématique complète des réseaux multicouches de neurones artificiels et rétropropagation.</p>
+            <p>Cliquez ici pour envoyer une requête réseau et extraire en temps réel l'arborescence de MachineLearnia.</p>
         </div>
     </div>
 
     <div class="console-zone">
-        <div class="console-title">Console de Traitement Algorithmique :</div>
-        <div id="console-output" class="console-text">Sélectionnez un deck de cartes ci-dessus pour initialiser l'analyse spatiale du code source de MachineLearnia...</div>
+        <div class="console-title">Console de Traitement de l'API GitHub :</div>
+        <div id="console-output" class="console-text">En attente d'initialisation... Cliquez sur la carte pour interroger le dépôt distant.</div>
     </div>
 
     <script>
-        function simulerAnalyse(titre, details) {
+        function connecterEtAnalyser() {
             const output = document.getElementById('console-output');
-            output.innerHTML = `[INITIALISATION] Connexion distante au dépôt MachineLearnia...\n[OK] Arborescence du code source validée.\n\n[ANALYSE STRUCTURELLE] ➔ ${titre}\n`;
-            
-            setTimeout(() => {
-                output.innerHTML += `\n[MÉTADONNÉES EXTRAITES] :\n${details}\n\n[STATUS] Analyse cartographique achevée. Système stable.`;
-            }, 600);
+            output.innerHTML = `[CONNEXION] Envoi d'une requête HTTP vers api.github.com...\n[INFO] Cible : MachineLearnia/Python-Machine-Learning\n`;
+
+            // Appel réel à l'API GitHub pour récupérer le contenu du dépôt
+            fetch('https://api.github.com/repos/MachineLearnia/Python-Machine-Learning/contents')
+            .then(response => {
+                if (!response.ok) throw new Error("Impossible d'accéder à l'API GitHub");
+                return response.json();
+            })
+            .then(data => {
+                output.innerHTML += `[OK] Réponse reçue du serveur GitHub.\n[ANALYSE] Extraction des fichiers sources détectés à la racine :\n\n`;
+                
+                // On boucle sur les vrais fichiers du dépôt
+                data.forEach(item => {
+                    let icone = item.type === 'dir' ? '📁 [DOSSIER]' : '📄 [FICHIER]';
+                    output.innerHTML += `${icone} ${item.name} (Taille: ${item.size} octets)\n`;
+                });
+
+                output.innerHTML += `\n[STATUS] Analyse spatiale du code achevée avec succès.`;
+            })
+            .catch(error => {
+                output.innerHTML += `\n[ERREUR] Échec de la connexion : ${error.message}`;
+            });
         }
     </script>
 
