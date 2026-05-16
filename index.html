@@ -11,6 +11,7 @@
             --primary-color: #00d2ff;
             --text-color: #ffffff;
             --accent-color: #00e676;
+            --border-color: #1e293b;
         }
 
         body {
@@ -26,66 +27,119 @@
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 15px;
+            padding-bottom: 20px;
             width: 85%;
+            max-width: 1200px;
         }
 
-        h1 { color: var(--primary-color); margin: 0 0 10px 0; font-size: 2rem; }
-        .repo-link { color: #8a99ad; font-size: 0.9rem; }
+        header h1 {
+            color: var(--primary-color);
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .author-tag {
+            color: #8a99ad;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+
+        .repo-link {
+            color: #566a85;
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
 
         .container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
             width: 85%;
             max-width: 1200px;
         }
 
         .card {
             background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 25px;
             border-top: 4px solid var(--primary-color);
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0,210,255,0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 210, 255, 0.25);
             background-color: #1c253c;
+            border-top-color: var(--accent-color);
         }
 
-        .card h3 { margin-top: 0; color: var(--primary-color); }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+
         .badge {
             background-color: #243b55;
             color: #00d2ff;
-            padding: 2px 8px;
-            border-radius: 4px;
+            padding: 4px 10px;
+            border-radius: 6px;
             font-size: 0.75rem;
             font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .card p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
         }
 
         .console-zone {
-            margin-top: 30px;
+            margin-top: 40px;
             width: 85%;
             max-width: 1200px;
             background-color: #05070c;
-            border: 1px solid #1e293b;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.6);
         }
 
-        .console-title { color: #8a99ad; margin-top: 0; font-size: 1rem; }
+        .console-title {
+            color: #8a99ad;
+            margin-top: 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
         .console-text {
             font-family: 'Courier New', Courier, monospace;
             color: var(--accent-color);
-            line-height: 1.6;
+            line-height: 1.7;
             white-space: pre-line;
+            font-size: 0.95rem;
         }
     </style>
 </head>
@@ -93,42 +147,52 @@
 
     <header>
         <h1>Simulateur d'Analyse IA par Cartes</h1>
-        <div class="repo-link">Dépôt cible : github.com/MachineLearnia/Python-Machine-Learning</div>
+        <div class="author-tag">Expertise et Recherche : <strong>[NON...Jenhi.Mariame]</strong> | Faculté des Sciences - Fès</div>
+        <div class="repo-link">Target Repository: MachineLearnia/Python-Machine-Learning</div>
     </header>
 
     <div class="container">
-        <!-- Carte 1 -->
-        <div class="card" onclick="simulerAnalyse('Data Science Essentials', 'Analyse des modules fondamentaux NumPy et Pandas.\n- Vérification des structures de tableaux (ndarrays).\n- Nettoyage des données, gestion des valeurs manquantes (NaN) et indexation avancée via Pandas.')">
-            <h3><span class="badge">Carte 01</span> NumPy & Pandas</h3>
-            <p>Exploration des bases du traitement de données et manipulation de matrices.</p>
+        <!-- Carte 01 -->
+        <div class="card" onclick="simulerAnalyse('Data Science Essentials (NumPy & Pandas)', '• Analyse des matrices à N dimensions (ndarrays).\n• Nettoyage des datasets, traitement des valeurs manquantes (NaN).\n• Normalisation des données et encodage des variables catégorielles.')">
+            <div class="card-header">
+                <h3>NumPy & Pandas</h3>
+                <span class="badge">DECK 01</span>
+            </div>
+            <p>Traitement de données massives, manipulation de matrices et préparation des structures de données.</p>
         </div>
 
-        <!-- Carte 2 -->
-        <div class="card" onclick="simulerAnalyse('Scikit-Learn Regression & Classification', 'Analyse des algorithmes de Machine Learning supervisé.\n- Modélisation : Régression Linéaire, Logistique et SVM.\n- Métriques évaluées : Calcul des erreurs quadratiques et matrice de confusion.')">
-            <h3><span class="badge">Carte 02</span> Scikit-Learn</h3>
-            <p>Évaluation des modèles de régression, de classification et de validation croisée.</p>
+        <!-- Carte 02 -->
+        <div class="card" onclick="simulerAnalyse('Algorithmes Scikit-Learn', '• Modélisation: Régression Linéaire, Logistique, et arbres de décision.\n• Algorithmes de Classification et Support Vector Machines (SVM).\n• Évaluation: Calcul de l\'erreur quadratique moyenne (MSE) et matrice de confusion.')">
+            <div class="card-header">
+                <h3>Scikit-Learn</h3>
+                <span class="badge">DECK 02</span>
+            </div>
+            <p>Mise en œuvre de modèles supervisés, entraînement, validation croisée et extraction de métriques de précision.</p>
         </div>
 
-        <!-- Carte 3 -->
-        <div class="card" onclick="simulerAnalyse('Deep Learning de Zéro (Neural Networks)', 'Analyse mathématique des réseaux de neurones artificiels.\n- Initialisation des paramètres : Matrices de poids W1, W2 et vecteurs de biais b1, b2.\n- Équations d\'activation : Z1 = W1.X + b1, suivies de la fonction Sigmoïde ou ReLU.\n- Rétropropagation : Calcul des gradients et mise à jour via la descente de gradient.')">
-            <h3><span class="badge">Carte 03</span> Réseaux de Neurones</h3>
-            <p>Modélisation des couches profondes, calcul de la propagation et des activations mathématiques.</p>
+        <!-- Carte 03 -->
+        <div class="card" onclick="simulerAnalyse('Deep Learning de Zéro (Neural Networks)', '• Initialisation: Paramétrage des matrices de poids W1, W2 et des vecteurs de biais b1, b2.\n• Forward Propagation: Équations d\'activation Z1 = W1 • X + b1, suivies de ReLU ou Sigmoïde.\n• Backpropagation: Calcul des gradients dW, db et optimisation via Descente de Gradient.')">
+            <div class="card-header">
+                <h3>Réseaux de Neurones</h3>
+                <span class="badge">DECK 03</span>
+            </div>
+            <p>Modélisation mathématique complète des réseaux multicouches de neurones artificiels et rétropropagation.</p>
         </div>
     </div>
 
     <div class="console-zone">
-        <div class="console-title">Console d'Analyse Spatiale du Code :</div>
-        <div id="console-output" class="console-text">Sélectionnez une carte ci-dessus pour lancer la simulation analytique des algorithmes...</div>
+        <div class="console-title">Console de Traitement Algorithmique :</div>
+        <div id="console-output" class="console-text">Sélectionnez un deck de cartes ci-dessus pour initialiser l'analyse spatiale du code source de MachineLearnia...</div>
     </div>
 
     <script>
         function simulerAnalyse(titre, details) {
             const output = document.getElementById('console-output');
-            output.innerHTML = `[CONNEXION] Accès au dépôt MachineLearnia...\n[OK] Fichiers sources détectés.\n\n[ANALYSE EN COURS] $\\rightarrow$ ${titre}...\n`;
+            output.innerHTML = `[INITIALISATION] Connexion distante au dépôt MachineLearnia...\n[OK] Arborescence du code source validée.\n\n[ANALYSE STRUCTURELLE] ➔ ${titre}\n`;
             
             setTimeout(() => {
-                output.innerHTML += `\n[DONNÉES EXTRAITES] :\n${details}\n\n[STATUS] Analyse terminée avec succès.`;
-            }, 500);
+                output.innerHTML += `\n[MÉTADONNÉES EXTRAITES] :\n${details}\n\n[STATUS] Analyse cartographique achevée. Système stable.`;
+            }, 600);
         }
     </script>
 
