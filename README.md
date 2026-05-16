@@ -13,7 +13,7 @@ Pour démontrer ses performances d'analyse, le système est ici configuré pour 
 3. **Paramétrage Mathématique :** Suivi structurel abstrait des réseaux de neurones (Poids $W_1$, activations $Z_1$).
 
 ## Accès Direct à l'Outil Independent
-*   👉 **[Exécuter le Simulateur de Cartes] (https://coffee-mersey-95.tiiny.site/)***
+*   👉 **[Exécuter le Simulateur de Cartes] (https://tenserf.netlify.app/)***
 
 
     
