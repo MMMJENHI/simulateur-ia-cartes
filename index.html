@@ -32,6 +32,31 @@
             padding-bottom: 20px;
             width: 85%;
             max-width: 1200px;
+            position: relative;
+        }
+
+        /* LOGO IA EN LOSANGE STYLE LABORATOIRE */
+        .logo-ia {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            margin: 0 auto 15px auto;
+            transform: rotate(45deg); /* Crée la forme de losange */
+            box-shadow: 0 0 15px var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.5s ease;
+        }
+        .logo-ia:hover {
+            transform: rotate(225deg);
+        }
+        .logo-ia-inner {
+            transform: rotate(-45deg); /* Redresse le texte à l'intérieur */
+            font-weight: bold;
+            color: #0b0f19;
+            font-size: 0.9rem;
+            font-family: monospace;
         }
 
         header h1 {
@@ -140,95 +165,103 @@
             white-space: pre-line;
             font-size: 0.95rem;
         }
+
+        /* ÉGALISEUR INTERACTIF POUR LA CARTE 08 */
+        .audio-graph-container {
+            display: flex;
+            gap: 6px;
+            align-items: flex-end;
+            height: 80px;
+            background: #090d16;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border: 1px solid #1e293b;
+        }
+        .audio-bar {
+            flex: 1;
+            background: var(--accent-color);
+            height: 50%;
+            border-radius: 2px;
+            transition: height 0.15s ease, background-color 0.3s;
+        }
+        .btn-filter {
+            background: var(--primary-color);
+            color: #0b0f19;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: sans-serif;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .btn-filter:hover {
+            background: var(--accent-color);
+        }
     </style>
 </head>
 <body>
 
     <header>
+        <!-- LE LOGO IA EN LOSANGE SOLICITÉ -->
+        <div class="logo-ia">
+            <div class="logo-ia-inner">IA</div>
+        </div>
         <h1>Simulateur d'Analyse Spatiale par Cartes</h1>
         <div class="author-tag">Expertise et Recherche : <strong>[NON...Jenhi.Mariame]</strong> | Faculté des Sciences - Fès</div>
         <div class="repo-link">Cas d'étude externe configuré : Modélisation des architectures d'Intelligence Artificielle</div>
     </header>
 
     <div class="container">
-        <!-- Carte 01 -->
-        <div class="card" onclick="simulerAnalyse('Carte 01 : NumPy & Pandas', '• Exploration des bases du traitement de données et manipulation de matrices.\n• Scan des structures de tableaux multicouches (ndarrays).\n• Extraction des scripts d\'indexation et de nettoyage des datasets.')">
-            <div class="card-header">
-                <h3>NumPy & Pandas</h3>
-                <span class="badge">Carte 01</span>
-            </div>
+        <!-- Cartes 01 à 07 -->
+        <div class="card" onclick="simulerAnalyse('Carte 01 : NumPy & Pandas', '• Exploration des bases du traitement de données et manipulation de matrices.\n• Scan des structures de tableaux ndarrays.\n• Extraction des scripts d\'indexation.')">
+            <div class="card-header"><h3>NumPy & Pandas</h3><span class="badge">Carte 01</span></div>
             <p>Exploration des bases du traitement de données et manipulation de matrices de calcul.</p>
         </div>
 
-        <!-- Carte 02 -->
-        <div class="card" onclick="simulerAnalyse('Carte 02 : Scikit-Learn', '• Évaluation des modèles de régression, de classification et de validation croisée.\n• Détection des fonctions de coût (MSE) et matrices de confusion dans le code source.\n• Cartographie des pipelines d\'entraînement supervisé.')">
-            <div class="card-header">
-                <h3>Scikit-Learn</h3>
-                <span class="badge">Carte 02</span>
-            </div>
+        <div class="card" onclick="simulerAnalyse('Carte 02 : Scikit-Learn', '• Évaluation des modèles de régression, de classification et de validation croisée.\n• Détection des matrices de confusion.')">
+            <div class="card-header"><h3>Scikit-Learn</h3><span class="badge">Carte 02</span></div>
             <p>Évaluation des modèles de régression, de classification et de validation croisée des données.</p>
         </div>
 
-        <!-- Carte 03 -->
-        <div class="card" onclick="simulerAnalyse('Carte 03 : Réseaux de Neurones', '• Modélisation des couches profondes, calcul de la propagation et des activations mathématiques.\n• Paramètres d\'architecture identifiés : Poids W1, W2 et matrices d\'activation Z1.\n• Analyse mathématique des fonctions de rétropropagation.')">
-            <div class="card-header">
-                <h3>Réseaux de Neurones</h3>
-                <span class="badge">Carte 03</span>
-            </div>
+        <div class="card" onclick="simulerAnalyse('Carte 03 : Réseaux de Neurones', '• Paramètres d\'architecture identifiés : Poids W1, W2 et matrices d\'activation Z1.\n• Analyse mathématique.')">
+            <div class="card-header"><h3>Réseaux de Neurones</h3><span class="badge">Carte 03</span></div>
             <p>Modélisation des couches profondes, calcul de la propagation et des activations mathématiques.</p>
         </div>
 
-        <!-- Carte 04 -->
-        <div class="card" onclick="simulerAnalyse('Carte 04 : Exploratory Data Analysis (EDA)', '• Analyse exploratoire de données statistiques via Matplotlib et Seaborn.\n• Détection automatique des corrélations de variables (Matrices de corrélation).\n• Visualisation spatiale des distributions de données et détection des valeurs aberrantes (Outliers).')">
-            <div class="card-header">
-                <h3>EDA (Analyse Données)</h3>
-                <span class="badge">Carte 04</span>
-            </div>
+        <div class="card" onclick="simulerAnalyse('Carte 04 : Exploratory Data Analysis (EDA)', '• Analyse exploratoire via Matplotlib.\n• Détection automatique des corrélations de variables.')">
+            <div class="card-header"><h3>EDA (Analyse Données)</h3><span class="badge">Carte 04</span></div>
             <p>Visualisation statistique des distributions, corrélations et exploration descriptive des datasets.</p>
         </div>
 
-        <!-- Carte 05 -->
-        <div class="card" onclick="simulerAnalyse('Carte 05 : TensorFlow Core', '• Analyse de l\'écosystème de calcul distribué et gestion des graphes de tenseurs (Tensors).\n• Vérification de l\'allocation matérielle (Optimisation CPU/GPU/TPU).\n• Suivi des graphes d\'exécution statiques et de l\'autodifférenciation computationnelle.')">
-            <div class="card-header">
-                <h3>TensorFlow</h3>
-                <span class="badge">Carte 05</span>
-            </div>
-            <p>Gestion des infrastructures massives de tenseurs, traitement bas niveau et graphes de calcul calculatoires.</p>
+        <div class="card" onclick="simulerAnalyse('Carte 05 : TensorFlow Core', '• Gestion des graphes de tenseurs (Tensors).\n• Suivi de l\'autodifférenciation computationnelle.')">
+            <div class="card-header"><h3>TensorFlow</h3><span class="badge">Carte 05</span></div>
+            <p>Gestion des infrastructures massives de tenseurs, traitement bas niveau et graphes de calcul.</p>
         </div>
 
-        <!-- Carte 06 -->
-        <div class="card" onclick="simulerAnalyse('Carte 06 : Keras API', '• Audit de l\'API haut niveau pour le prototypage rapide de réseaux profonds (Sequential / Functional API).\n• Compilation des modèles : Optimiseurs (Adam, SGD) et fonctions de perte (Cross-Entropy).\n• Suivi des processus d\'entraînement via les objets Callbacks et TensorBoard.')">
-            <div class="card-header">
-                <h3>Keras API</h3>
-                <span class="badge">Carte 06</span>
-            </div>
+        <div class="card" onclick="simulerAnalyse('Carte 06 : Keras API', '• Prototypage rapide de réseaux profonds.\n• Compilation des modèles : Optimiseurs (Adam, SGD).')">
+            <div class="card-header"><h3>Keras API</h3><span class="badge">Carte 06</span></div>
             <p>Prototypage rapide de couches neuronales profondes, abstraction haut niveau et gestion des entraînements.</p>
         </div>
 
-        <!-- Carte 07 : CHOIX EXPERT - Computer Vision -->
-        <div class="card" onclick="simulerAnalyse('Carte 07 : Vision par Ordinateur (OpenCV & CLAHE)', '• Traitement numérique d\'images matricielles.\n• Amélioration adaptative des contrastes par histogrammes limités (CLAHE).\n• Extraction de contours géométriques, segmentation de pixels et densitométrie spatiale.')">
-            <div class="card-header">
-                <h3>Computer Vision</h3>
-                <span class="badge">Carte 07</span>
-            </div>
-            <p>Analyse d'images, recalage de pixels, filtrage spatial et égalisation d'histogrammes complexes.</p>
+        <div class="card" onclick="simulerAnalyse('Carte 07 : Vision par Ordinateur', '• Amélioration adaptative des contrastes par histogrammes limités (CLAHE).\n• Extraction de contours.')">
+            <div class="card-header"><h3>Computer Vision</h3><span class="badge">Carte 07</span></div>
+            <p>Analyse d'images, recalage de pixels, filtrage spatial et égalisation d'histogrammes.</p>
         </div>
 
-        <!-- Carte 08 : CHOIX EXPERT - Signal Processing -->
-        <div class="card" onclick="simulerAnalyse('Carte 08 : Traitement du Signal & Audio', '• Analyse fréquentielle : Transformée de Fourier Rapide (FFT) et Densité Spectrale de Puissance (PSD).\n• Implémentation de filtres numériques (Butterworth, Tchebychev).\n• Extraction de caractéristiques acoustiques (MFCC) pour la classification de signaux audio.')">
+        <!-- CARTE 08 CONNECTÉE À L'APPLICATION INTERACTIVE -->
+        <div class="card" onclick="simulerAnalyse('Carte 08', '')">
             <div class="card-header">
                 <h3>Signal & Audio Processing</h3>
                 <span class="badge">Carte 08</span>
             </div>
-            <p>Filtrage de fréquences, réduction de bruit algorithmique et extraction de descripteurs audio.</p>
+            <p>Filtrage de fréquences (Butterworth), Densité Spectrale (PSD) et extraction des 13 coefficients MFCC.</p>
         </div>
 
-        <!-- Carte 09 : CHOIX EXPERT - MLOps & App Deployment -->
-        <div class="card" onclick="simulerAnalyse('Carte 09 : UI Frameworks & MLOps', '• Traduction de scripts algorithmiques en interfaces utilisateurs web via Streamlit et Gradio.\n• Configuration des points d\'accès d\'exécution (app.py) et intégration de widgets de contrôle interactifs.\n• Pipeline de déploiement continu vers des environnements de production cloud.')">
-            <div class="card-header">
-                <h3>Deployment & MLOps</h3>
-                <span class="badge">Carte 09</span>
-            </div>
+        <div class="card" onclick="simulerAnalyse('Carte 09 : UI Frameworks & MLOps', '• Interfaces utilisateurs web via Streamlit et Gradio.\n• Pipeline de déploiement continu.')">
+            <div class="card-header"><h3>Deployment & MLOps</h3><span class="badge">Carte 09</span></div>
             <p>Création d'applications web interactives pour modèles IA et déploiement d'interfaces décisionnelles.</p>
         </div>
     </div>
@@ -239,13 +272,70 @@
     </div>
 
     <script>
+        let animationInterval = null;
+
         function simulerAnalyse(titre, details) {
             const output = document.getElementById('console-output');
-            output.innerHTML = `[ACCÈS SYSTÈME] Initialisation de l'environnement d'analyse virtuel...\n[OK] Cartographie structurelle prête.\n\n[PROFIL EXÉCUTÉ] ➔ ${titre}\n`;
             
-            setTimeout(() => {
-                output.innerHTML += `\n[MÉTRIQUES ET PARAMÈTRES IDENTIFIÉS] :\n${details}\n\n[STATUS] Simulation spatiale achevée. Données compilées de manière stable.`;
-            }, 550);
+            // On arrête toute ancienne animation de spectre en cours
+            if (animationInterval) { clearInterval(animationInterval); }
+
+            if (titre === "Carte 08") {
+                // EXÉCUTION DYNAMIQUE ET UTILE DE LA CARTE 08
+                lancerInterfaceAudioReelle(output);
+            } else {
+                // Comportement standard pour les autres cartes
+                output.innerHTML = `[ACCÈS SYSTÈME] Initialisation de l'environnement virtuel...\n[OK] Architecture stable.\n\n[PROFIL EXÉCUTÉ] ➔ ${titre}\n\n[MÉTRIQUES IDENTIFIÉES] :\n${details}\n\n[STATUS] Opération achevée.`;
+            }
+        }
+
+        function lancerInterfaceAudioReelle(output) {
+            output.innerHTML = `<strong>[MODULE AUDIO ACTIVÉ]</strong>\n` +
+                               `➔ Fichier détecté : "chant_oiseau_parasite.wav" (Fe = 44100 Hz)\n` +
+                               `➔ Problème : Signal pollué par un bruit de fond basse fréquence.\n` +
+                               `➔ Visualisation en direct de la Densité Spectrale (PSD) brute :`;
+            
+            // Injection de l'égaliseur graphique dans la console
+            let gfx = '<div class="audio-graph-container">';
+            for(let i=0; i<15; i++) { gfx += '<div class="audio-bar"></div>'; }
+            gfx += '</div>';
+            gfx += '<div id="action-audio"><button class="btn-filter" onclick="appliquerFiltreButterworthHtml()">🔧 Appliquer le Filtre Butterworth (Couper les basses fréquences)</button></div>';
+            
+            output.innerHTML += gfx;
+            
+            // Animation des barres de fréquences (Simule la PSD vivante)
+            const barres = document.querySelectorAll('.audio-bar');
+            animationInterval = setInterval(() => {
+                barres.forEach(barre => {
+                    let h = Math.floor(Math.random() * 85) + 15;
+                    barre.style.height = h + '%';
+                });
+            }, 120);
+        }
+
+        function appliquerFiltreButterworthHtml() {
+            const barres = document.querySelectorAll('.audio-bar');
+            const actionZone = document.getElementById('action-audio');
+            
+            // Effet visuel : le filtre coupe les premières bandes de fréquences (les graves à gauche)
+            // Elles s'éteignent (passent à 5% de hauteur et changent de couleur)
+            clearInterval(animationInterval);
+            
+            for(let i=0; i<4; i++) {
+                barres[i].style.height = '8%';
+                barres[i].style.backgroundColor = '#ff5252'; // Deviennent rouges (coupées)
+            }
+            // Les fréquences aiguës de l'oiseau restent actives à droite
+            for(let i=4; i<15; i++) {
+                barres[i].style.height = '75%';
+                barres[i].style.backgroundColor = '#00d2ff';
+            }
+
+            // Génération immédiate de la matrice MFCC
+            actionZone.innerHTML = `\n<span style="color:var(--accent-color);">[FILTRAGE REUSSI] Filtre Butterworth d'ordre 4 appliqué avec succès à Fc = 300 Hz.\n` +
+                                   `[IA COMPILATION] Traitement Librosa terminé.\n` +
+                                   `➔ Matrice des 13 MFCC extraite ➔ Dimensions : <strong>Shape [13, 150]</strong>\n` +
+                                   `➔ Empreinte acoustique purifiée et envoyée aux réseaux de neurones ($W_1$, $Z_1$).</span>`;
         }
     </script>
 
