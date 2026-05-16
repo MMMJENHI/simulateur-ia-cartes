@@ -3,16 +3,15 @@
 *Faculté des Sciences - FÈS*
 
 ## Présentation
-Ce projet associe la génération procédurale de cartes de données à la puissance des outils de mind mapping conceptuels (GitMind, Miro, MyMap.AI). Il est connecté en temps réel via l'API GitHub pour analyser, décortiquer et cartographier les architectures de code complexes du dépôt de référence : `MachineLearnia/Python-Machine-Learning`.
+Ce projet est un environnement de simulation indépendant conçu pour générer des cartes de données procédurales et modéliser des architectures conceptuelles (à l'image des structures GitMind ou Miro). 
 
-### Écosystème d'Analyse :
-1. **Live API Scanning :** Requête réseau dynamique pour extraire l'arborescence réelle du dépôt cible (NumPy, Pandas, Scikit-Learn).
-2. **Mind Mapping IA :** Modélisation conceptuelle des dépendances des bibliothèques de calcul.
-3. **Suivi des Paramètres :** Structure des couches de neurones, matrices de poids ($W_1, W_2$) et vecteurs d'activation ($Z_1$).
+Pour démontrer ses performances d'analyse, le système est ici configuré pour cartographier et décortiquer de manière externe un grand dépôt éducatif de référence (Exemple d'application : `MachineLearnia/Python-Machine-Learning`).
 
-## Accès Direct aux Outils
-*   👉 **[Exécuter le Simulateur de Cartes IA](https://mmmjenhi.github.io/simulateur-ia-cartes/)**
-*   👉 **[Consulter l'Espace de Mind Mapping (Dépôt Code)](https://github.com/MMMJENHI/simulateur-ia-cartes)**
+### Fonctionnalités du Simulateur :
+1. **Cartographie de Flux :** Visualisation des modules de données (Simulations NumPy/Pandas).
+2. **Dépendances Algorithmiques :** Représentation des pipelines de classification (Scikit-Learn).
+3. **Paramétrage Mathématique :** Suivi structurel abstrait des réseaux de neurones (Poids $W_1$, activations $Z_1$).
 
----
-*© 2026 - Laboratoire d'Informatique et d'Analyse Spatiale - Fès*
+## Accès Direct à l'Outil Independent
+*   👉 **[Exécuter le Simulateur de Cartes](https://mmmjenhi.github.io/simulateur-ia-cartes/)** (ou votre lien Tiiny.host)
+*   👉 **[Consulter le Code Source de l'Application](https://github.com/MMMJENHI/simulateur-ia-cartes)**
