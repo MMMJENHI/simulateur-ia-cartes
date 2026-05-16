@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulateur IA - Cartographie Spatiale</title>
+    <title>Simulateur IA - Cartographie Spatiale Avancée</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -15,99 +15,237 @@
         }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin: 0; padding: 20px;
-            display: flex; flex-direction: column; align-items: center;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header {
-            text-align: center; margin-bottom: 40px;
+            text-align: center;
+            margin-bottom: 40px;
             border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 20px; width: 85%; max-width: 1200px;
+            padding-bottom: 20px;
+            width: 85%;
+            max-width: 1200px;
         }
 
-        h1 { color: var(--primary-color); margin: 0 0 10px 0; }
-        .author-tag { color: #8a99ad; margin-bottom: 5px; }
+        header h1 {
+            color: var(--primary-color);
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+        }
+
+        .author-tag {
+            color: #8a99ad;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+
+        .repo-link {
+            color: #566a85;
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
 
         .container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px; width: 85%; max-width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            width: 85%;
+            max-width: 1200px;
         }
 
         .card {
-            background-color: var(--card-bg); border-radius: 12px; padding: 25px;
-            border-top: 4px solid var(--primary-color); cursor: pointer;
-            transition: all 0.3s ease; box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            border-top: 4px solid var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .card:hover {
-            transform: translateY(-5px); box-shadow: 0 12px 20px rgba(0, 210, 255, 0.25);
-            background-color: #1c253c; border-top-color: var(--accent-color);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 210, 255, 0.25);
+            background-color: #1c253c;
+            border-top-color: var(--accent-color);
         }
 
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .badge { background-color: #243b55; color: #00d2ff; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .badge {
+            background-color: #243b55;
+            color: #00d2ff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .card p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
+        }
 
         .console-zone {
-            margin-top: 40px; width: 85%; max-width: 1200px;
-            background-color: #05070c; border: 1px solid var(--border-color);
-            border-radius: 10px; padding: 25px; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6);
+            margin-top: 40px;
+            width: 85%;
+            max-width: 1200px;
+            background-color: #05070c;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.6);
         }
 
-        .console-title { color: #8a99ad; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 15px; }
-        .console-text { font-family: 'Courier New', monospace; color: var(--accent-color); line-height: 1.7; white-space: pre-wrap; font-size: 0.95rem; }
+        .console-title {
+            color: #8a99ad;
+            margin-top: 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        .console-text {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--accent-color);
+            line-height: 1.7;
+            white-space: pre-line;
+            font-size: 0.95rem;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Simulateur d'Analyse IA Dynamique</h1>
+        <h1>Simulateur d'Analyse Spatiale par Cartes</h1>
         <div class="author-tag">Expertise et Recherche : <strong>[NON...Jenhi.Mariame]</strong> | Faculté des Sciences - Fès</div>
+        <div class="repo-link">Cas d'étude externe configuré : Modélisation des architectures d'Intelligence Artificielle</div>
     </header>
 
     <div class="container">
-        <!-- Carte 1 : Exploration en Temps Réel -->
-        <div class="card" onclick="connecterEtAnalyser()">
+        <!-- Carte 01 -->
+        <div class="card" onclick="simulerAnalyse('Carte 01 : NumPy & Pandas', '• Exploration des bases du traitement de données et manipulation de matrices.\n• Scan des structures de tableaux multicouches (ndarrays).\n• Extraction des scripts d\'indexation et de nettoyage des datasets.')">
             <div class="card-header">
-                <h3>Scanner le Dépôt Distant</h3>
-                <span class="badge">LIVE API</span>
+                <h3>NumPy & Pandas</h3>
+                <span class="badge">Carte 01</span>
             </div>
-            <p>Cliquez ici pour envoyer une requête réseau et extraire en temps réel l'arborescence de MachineLearnia.</p>
+            <p>Exploration des bases du traitement de données et manipulation de matrices de calcul.</p>
+        </div>
+
+        <!-- Carte 02 -->
+        <div class="card" onclick="simulerAnalyse('Carte 02 : Scikit-Learn', '• Évaluation des modèles de régression, de classification et de validation croisée.\n• Détection des fonctions de coût (MSE) et matrices de confusion dans le code source.\n• Cartographie des pipelines d\'entraînement supervisé.')">
+            <div class="card-header">
+                <h3>Scikit-Learn</h3>
+                <span class="badge">Carte 02</span>
+            </div>
+            <p>Évaluation des modèles de régression, de classification et de validation croisée des données.</p>
+        </div>
+
+        <!-- Carte 03 -->
+        <div class="card" onclick="simulerAnalyse('Carte 03 : Réseaux de Neurones', '• Modélisation des couches profondes, calcul de la propagation et des activations mathématiques.\n• Paramètres d\'architecture identifiés : Poids W1, W2 et matrices d\'activation Z1.\n• Analyse mathématique des fonctions de rétropropagation.')">
+            <div class="card-header">
+                <h3>Réseaux de Neurones</h3>
+                <span class="badge">Carte 03</span>
+            </div>
+            <p>Modélisation des couches profondes, calcul de la propagation et des activations mathématiques.</p>
+        </div>
+
+        <!-- Carte 04 -->
+        <div class="card" onclick="simulerAnalyse('Carte 04 : Exploratory Data Analysis (EDA)', '• Analyse exploratoire de données statistiques via Matplotlib et Seaborn.\n• Détection automatique des corrélations de variables (Matrices de corrélation).\n• Visualisation spatiale des distributions de données et détection des valeurs aberrantes (Outliers).')">
+            <div class="card-header">
+                <h3>EDA (Analyse Données)</h3>
+                <span class="badge">Carte 04</span>
+            </div>
+            <p>Visualisation statistique des distributions, corrélations et exploration descriptive des datasets.</p>
+        </div>
+
+        <!-- Carte 05 -->
+        <div class="card" onclick="simulerAnalyse('Carte 05 : TensorFlow Core', '• Analyse de l\'écosystème de calcul distribué et gestion des graphes de tenseurs (Tensors).\n• Vérification de l\'allocation matérielle (Optimisation CPU/GPU/TPU).\n• Suivi des graphes d\'exécution statiques et de l\'autodifférenciation computationnelle.')">
+            <div class="card-header">
+                <h3>TensorFlow</h3>
+                <span class="badge">Carte 05</span>
+            </div>
+            <p>Gestion des infrastructures massives de tenseurs, traitement bas niveau et graphes de calcul calculatoires.</p>
+        </div>
+
+        <!-- Carte 06 -->
+        <div class="card" onclick="simulerAnalyse('Carte 06 : Keras API', '• Audit de l\'API haut niveau pour le prototypage rapide de réseaux profonds (Sequential / Functional API).\n• Compilation des modèles : Optimiseurs (Adam, SGD) et fonctions de perte (Cross-Entropy).\n• Suivi des processus d\'entraînement via les objets Callbacks et TensorBoard.')">
+            <div class="card-header">
+                <h3>Keras API</h3>
+                <span class="badge">Carte 06</span>
+            </div>
+            <p>Prototypage rapide de couches neuronales profondes, abstraction haut niveau et gestion des entraînements.</p>
+        </div>
+
+        <!-- Carte 07 : CHOIX EXPERT - Computer Vision -->
+        <div class="card" onclick="simulerAnalyse('Carte 07 : Vision par Ordinateur (OpenCV & CLAHE)', '• Traitement numérique d\'images matricielles.\n• Amélioration adaptative des contrastes par histogrammes limités (CLAHE).\n• Extraction de contours géométriques, segmentation de pixels et densitométrie spatiale.')">
+            <div class="card-header">
+                <h3>Computer Vision</h3>
+                <span class="badge">Carte 07</span>
+            </div>
+            <p>Analyse d'images, recalage de pixels, filtrage spatial et égalisation d'histogrammes complexes.</p>
+        </div>
+
+        <!-- Carte 08 : CHOIX EXPERT - Signal Processing -->
+        <div class="card" onclick="simulerAnalyse('Carte 08 : Traitement du Signal & Audio', '• Analyse fréquentielle : Transformée de Fourier Rapide (FFT) et Densité Spectrale de Puissance (PSD).\n• Implémentation de filtres numériques (Butterworth, Tchebychev).\n• Extraction de caractéristiques acoustiques (MFCC) pour la classification de signaux audio.')">
+            <div class="card-header">
+                <h3>Signal & Audio Processing</h3>
+                <span class="badge">Carte 08</span>
+            </div>
+            <p>Filtrage de fréquences, réduction de bruit algorithmique et extraction de descripteurs audio.</p>
+        </div>
+
+        <!-- Carte 09 : CHOIX EXPERT - MLOps & App Deployment -->
+        <div class="card" onclick="simulerAnalyse('Carte 09 : UI Frameworks & MLOps', '• Traduction de scripts algorithmiques en interfaces utilisateurs web via Streamlit et Gradio.\n• Configuration des points d\'accès d\'exécution (app.py) et intégration de widgets de contrôle interactifs.\n• Pipeline de déploiement continu vers des environnements de production cloud.')">
+            <div class="card-header">
+                <h3>Deployment & MLOps</h3>
+                <span class="badge">Carte 09</span>
+            </div>
+            <p>Création d'applications web interactives pour modèles IA et déploiement d'interfaces décisionnelles.</p>
         </div>
     </div>
 
     <div class="console-zone">
-        <div class="console-title">Console de Traitement de l'API GitHub :</div>
-        <div id="console-output" class="console-text">En attente d'initialisation... Cliquez sur la carte pour interroger le dépôt distant.</div>
+        <div class="console-title">Console d'Analyse Spatiale du Code :</div>
+        <div id="console-output" class="console-text">Sélectionnez une carte ci-dessus pour lancer la simulation analytique des architectures technologiques...</div>
     </div>
 
     <script>
-        function connecterEtAnalyser() {
+        function simulerAnalyse(titre, details) {
             const output = document.getElementById('console-output');
-            output.innerHTML = `[CONNEXION] Envoi d'une requête HTTP vers api.github.com...\n[INFO] Cible : MachineLearnia/Python-Machine-Learning\n`;
-
-            // Appel réel à l'API GitHub pour récupérer le contenu du dépôt
-            fetch('https://api.github.com/repos/MachineLearnia/Python-Machine-Learning/contents')
-            .then(response => {
-                if (!response.ok) throw new Error("Impossible d'accéder à l'API GitHub");
-                return response.json();
-            })
-            .then(data => {
-                output.innerHTML += `[OK] Réponse reçue du serveur GitHub.\n[ANALYSE] Extraction des fichiers sources détectés à la racine :\n\n`;
-                
-                // On boucle sur les vrais fichiers du dépôt
-                data.forEach(item => {
-                    let icone = item.type === 'dir' ? '📁 [DOSSIER]' : '📄 [FICHIER]';
-                    output.innerHTML += `${icone} ${item.name} (Taille: ${item.size} octets)\n`;
-                });
-
-                output.innerHTML += `\n[STATUS] Analyse spatiale du code achevée avec succès.`;
-            })
-            .catch(error => {
-                output.innerHTML += `\n[ERREUR] Échec de la connexion : ${error.message}`;
-            });
+            output.innerHTML = `[ACCÈS SYSTÈME] Initialisation de l'environnement d'analyse virtuel...\n[OK] Cartographie structurelle prête.\n\n[PROFIL EXÉCUTÉ] ➔ ${titre}\n`;
+            
+            setTimeout(() => {
+                output.innerHTML += `\n[MÉTRIQUES ET PARAMÈTRES IDENTIFIÉS] :\n${details}\n\n[STATUS] Simulation spatiale achevée. Données compilées de manière stable.`;
+            }, 550);
         }
     </script>
 
