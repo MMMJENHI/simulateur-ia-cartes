@@ -11,5 +11,6 @@ Ce projet associe la génération procédurale de cartes de données à la puiss
 3. **Suivi des Paramètres :** Visualisation structurelle des couches de neurones, des matrices de poids ($W$) et des fonctions d'activation.
 
 ## Accès Direct aux Outils
+## Accès Direct aux Outils
 *   👉 **[Exécuter le Simulateur de Cartes IA](https://mmmjenhi.github.io/simulateur-ia-cartes/machine.html)**
 *   👉 **[Consulter l'Espace de Mind Mapping (Dépôt Code)](https://github.com/MMMJENHI/simulateur-ia-cartes)**
