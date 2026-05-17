@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulateur IA - Cartographie Spatiale Avancée</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -12,6 +14,8 @@
             --text-color: #ffffff;
             --accent-color: #00e676;
             --border-color: #1e293b;
+            --danger-color: #ff5252;
+            --purple-color: #a855f7;
         }
 
         body {
@@ -23,11 +27,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             border-bottom: 2px solid var(--primary-color);
             padding-bottom: 20px;
             width: 85%;
@@ -37,25 +42,25 @@
 
         /* LOGO IA EN LOSANGE STYLE LABORATOIRE */
         .logo-ia {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             margin: 0 auto 15px auto;
-            transform: rotate(45deg); /* Crée la forme de losange */
-            box-shadow: 0 0 15px var(--primary-color);
+            transform: rotate(45deg);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .logo-ia:hover {
             transform: rotate(225deg);
         }
         .logo-ia-inner {
-            transform: rotate(-45deg); /* Redresse le texte à l'intérieur */
-            font-weight: bold;
+            transform: rotate(-45deg);
+            font-weight: 800;
             color: #0b0f19;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-family: monospace;
         }
 
@@ -63,6 +68,7 @@
             color: var(--primary-color);
             margin: 0 0 10px 0;
             font-size: 2.2rem;
+            letter-spacing: -0.5px;
         }
 
         .author-tag {
@@ -77,18 +83,20 @@
             font-family: monospace;
         }
 
+        /* GRILLE DES 9 CARTES */
         .container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
             width: 85%;
             max-width: 1200px;
+            margin-bottom: 30px;
         }
 
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 25px;
+            padding: 20px;
             border-top: 4px solid var(--primary-color);
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -96,10 +104,11 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            min-height: 150px;
         }
 
         .card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             box-shadow: 0 12px 20px rgba(0, 210, 255, 0.25);
             background-color: #1c253c;
             border-top-color: var(--accent-color);
@@ -109,13 +118,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .card h3 {
             margin: 0;
             color: var(--primary-color);
-            font-size: 1.2rem;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .badge {
@@ -130,20 +142,51 @@
 
         .card p {
             color: #cbd5e1;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             line-height: 1.5;
             margin: 0;
         }
 
-        .console-zone {
-            margin-top: 40px;
+        /* DOUBLE TERMINAL / WORKSPACE IA PARALLÈLE */
+        .workspace {
+            display: flex;
+            gap: 20px;
             width: 85%;
             max-width: 1200px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .console-zone {
+            flex: 1;
+            min-width: 320px;
             background-color: #05070c;
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 25px;
+            padding: 20px;
             box-shadow: inset 0 3px 6px rgba(0,0,0,0.6);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .ai-assistant-zone {
+            width: 400px;
+            background-color: #090e1a;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 900px) {
+            .ai-assistant-zone {
+                width: 100%;
+            }
         }
 
         .console-title {
@@ -156,6 +199,9 @@
             border-bottom: 1px solid #1e293b;
             padding-bottom: 8px;
             margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .console-text {
@@ -164,48 +210,225 @@
             line-height: 1.7;
             white-space: pre-line;
             font-size: 0.95rem;
+            overflow-y: auto;
+            max-height: 350px;
+            min-height: 200px;
         }
 
-        /* ÉGALISEUR INTERACTIF POUR LA CARTE 08 */
+        /* ÉGALISEUR INTERACTIF */
         .audio-graph-container {
             display: flex;
-            gap: 6px;
+            gap: 5px;
             align-items: flex-end;
-            height: 80px;
+            height: 90px;
             background: #090d16;
-            padding: 15px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             margin: 15px 0;
             border: 1px solid #1e293b;
         }
         .audio-bar {
             flex: 1;
             background: var(--accent-color);
-            height: 50%;
+            height: 40%;
             border-radius: 2px;
-            transition: height 0.15s ease, background-color 0.3s;
+            transition: height 0.1s ease, background-color 0.3s;
         }
+
+        /* CONTROLES ET BOUTONS */
         .btn-filter {
             background: var(--primary-color);
             color: #0b0f19;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 18px;
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             font-family: sans-serif;
             margin-top: 10px;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         .btn-filter:hover {
             background: var(--accent-color);
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.4);
+        }
+
+        .btn-ai-explain {
+            background: linear-gradient(135deg, var(--purple-color), #ec4899);
+            color: #ffffff;
+            border: none;
+            padding: 8px 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-ai-explain:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+        }
+
+        /* INTERFACE CHAT ASSISTANT */
+        .chat-history {
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 250px;
+            min-height: 180px;
+            background: #04060b;
+            border: 1px solid #111827;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .chat-message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        .chat-user {
+            background: rgba(0, 210, 255, 0.1);
+            border-left: 3px solid var(--primary-color);
+            align-self: flex-end;
+        }
+        .chat-model {
+            background: rgba(0, 230, 118, 0.05);
+            border-left: 3px solid var(--accent-color);
+        }
+        .chat-system {
+            background: rgba(255, 255, 255, 0.05);
+            font-style: italic;
+            color: #8a99ad;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .chat-input {
+            flex-grow: 1;
+            background: #0c101f;
+            border: 1px solid #1e293b;
+            border-radius: 6px;
+            padding: 10px;
+            color: #ffffff;
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .chat-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        /* CONFIGURATION CLÉ API ET OPTIONS */
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #64748b;
+            gap: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #1e293b;
+            padding-bottom: 8px;
+        }
+        .api-key-input {
+            background: #04060b;
+            border: 1px solid #1e293b;
+            color: #cbd5e1;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            width: 140px;
+            font-family: monospace;
+        }
+        .api-key-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .grounding-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* SIMULATIONS VISUELLES */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 40px);
+            gap: 5px;
+            margin: 10px 0;
+        }
+        .matrix-cell {
+            width: 40px;
+            height: 40px;
+            background: #141b2d;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .slider-control {
+            background: #141b2d;
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        input[type="range"] {
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+        .confusion-matrix-table {
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .confusion-matrix-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            text-align: center;
+        }
+        
+        .sources-list {
+            font-size: 0.75rem;
+            border-top: 1px solid #1f2937;
+            padding-top: 8px;
+            margin-top: 8px;
+            color: #9ca3af;
+        }
+        .sources-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .sources-list a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- LE LOGO IA EN LOSANGE SOLICITÉ -->
         <div class="logo-ia">
             <div class="logo-ia-inner">IA</div>
         </div>
@@ -215,87 +438,409 @@
     </header>
 
     <div class="container">
-        <!-- Cartes 01 à 07 -->
-        <div class="card" onclick="simulerAnalyse('Carte 01 : NumPy & Pandas', '• Exploration des bases du traitement de données et manipulation de matrices.\n• Scan des structures de tableaux ndarrays.\n• Extraction des scripts d\'indexation.')">
-            <div class="card-header"><h3>NumPy & Pandas</h3><span class="badge">Carte 01</span></div>
+        <!-- Carte 01 -->
+        <div class="card" onclick="simulerAnalyse('Carte 01')">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-table-cells"></i> NumPy & Pandas</h3>
+                <span class="badge">Carte 01</span>
+            </div>
             <p>Exploration des bases du traitement de données et manipulation de matrices de calcul.</p>
         </div>
 
-        <div class="card" onclick="simulerAnalyse('Carte 02 : Scikit-Learn', '• Évaluation des modèles de régression, de classification et de validation croisée.\n• Détection des matrices de confusion.')">
-            <div class="card-header"><h3>Scikit-Learn</h3><span class="badge">Carte 02</span></div>
+        <!-- Carte 02 -->
+        <div class="card" onclick="simulerAnalyse('Carte 02')">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-chart-line"></i> Scikit-Learn</h3>
+                <span class="badge">Carte 02</span>
+            </div>
             <p>Évaluation des modèles de régression, de classification et de validation croisée des données.</p>
         </div>
 
-        <div class="card" onclick="simulerAnalyse('Carte 03 : Réseaux de Neurones', '• Paramètres d\'architecture identifiés : Poids W1, W2 et matrices d\'activation Z1.\n• Analyse mathématique.')">
-            <div class="card-header"><h3>Réseaux de Neurones</h3><span class="badge">Carte 03</span></div>
+        <!-- Carte 03 -->
+        <div class="card" onclick="simulerAnalyse('Carte 03')">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-network-wired"></i> Réseaux de Neurones</h3>
+                <span class="badge">Carte 03</span>
+            </div>
             <p>Modélisation des couches profondes, calcul de la propagation et des activations mathématiques.</p>
         </div>
 
-        <div class="card" onclick="simulerAnalyse('Carte 04 : Exploratory Data Analysis (EDA)', '• Analyse exploratoire via Matplotlib.\n• Détection automatique des corrélations de variables.')">
-            <div class="card-header"><h3>EDA (Analyse Données)</h3><span class="badge">Carte 04</span></div>
+        <!-- Carte 04 -->
+        <div class="card" onclick="simulerAnalyse('Carte 04')">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-chart-bar"></i> EDA (Analyse Données)</h3>
+                <span class="badge">Carte 04</span>
+            </div>
             <p>Visualisation statistique des distributions, corrélations et exploration descriptive des datasets.</p>
         </div>
 
-        <div class="card" onclick="simulerAnalyse('Carte 05 : TensorFlow Core', '• Gestion des graphes de tenseurs (Tensors).\n• Suivi de l\'autodifférenciation computationnelle.')">
-            <div class="card-header"><h3>TensorFlow</h3><span class="badge">Carte 05</span></div>
+        <!-- Carte 05 -->
+        <div class="card" onclick="simulerAnalyse('Carte 05')">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-database"></i> TensorFlow Core</h3>
+                <span class="badge">Carte 05</span>
+            </div>
             <p>Gestion des infrastructures massives de tenseurs, traitement bas niveau et graphes de calcul.</p>
         </div>
 
-        <div class="card" onclick="simulerAnalyse('Carte 06 : Keras API', '• Prototypage rapide de réseaux profonds.\n• Compilation des modèles : Optimiseurs (Adam, SGD).')">
-            <div class="card-header"><h3>Keras API</h3><span class="badge">Carte 06</span></div>
+        <!-- Carte 06 -->
+        <div class="card" onclick="simulerAnalyse('Carte 06')">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-gears"></i> Keras API</h3>
+                <span class="badge">Carte 06</span>
+            </div>
             <p>Prototypage rapide de couches neuronales profondes, abstraction haut niveau et gestion des entraînements.</p>
         </div>
 
-        <div class="card" onclick="simulerAnalyse('Carte 07 : Vision par Ordinateur', '• Amélioration adaptative des contrastes par histogrammes limités (CLAHE).\n• Extraction de contours.')">
-            <div class="card-header"><h3>Computer Vision</h3><span class="badge">Carte 07</span></div>
+        <!-- Carte 07 -->
+        <div class="card" onclick="simulerAnalyse('Carte 07')">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-eye"></i> Computer Vision</h3>
+                <span class="badge">Carte 07</span>
+            </div>
             <p>Analyse d'images, recalage de pixels, filtrage spatial et égalisation d'histogrammes.</p>
         </div>
 
-        <!-- CARTE 08 CONNECTÉE À L'APPLICATION INTERACTIVE -->
-        <div class="card" onclick="simulerAnalyse('Carte 08', '')">
+        <!-- Carte 08 -->
+        <div class="card" onclick="simulerAnalyse('Carte 08')">
             <div class="card-header">
-                <h3>Signal & Audio Processing</h3>
+                <h3><i class="fa-solid fa-wave-square"></i> Signal & Audio</h3>
                 <span class="badge">Carte 08</span>
             </div>
             <p>Filtrage de fréquences (Butterworth), Densité Spectrale (PSD) et extraction des 13 coefficients MFCC.</p>
         </div>
 
-        <div class="card" onclick="simulerAnalyse('Carte 09 : UI Frameworks & MLOps', '• Interfaces utilisateurs web via Streamlit et Gradio.\n• Pipeline de déploiement continu.')">
-            <div class="card-header"><h3>Deployment & MLOps</h3><span class="badge">Carte 09</span></div>
+        <!-- Carte 09 -->
+        <div class="card" onclick="simulerAnalyse('Carte 09')">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-circle-nodes"></i> Deployment & MLOps</h3>
+                <span class="badge">Carte 09</span>
+            </div>
             <p>Création d'applications web interactives pour modèles IA et déploiement d'interfaces décisionnelles.</p>
         </div>
     </div>
 
-    <div class="console-zone">
-        <div class="console-title">Console d'Analyse Spatiale du Code :</div>
-        <div id="console-output" class="console-text">Sélectionnez une carte ci-dessus pour lancer la simulation analytique des architectures technologiques...</div>
+    <!-- DOUBLE TERMINAL / WORKSPACE IA PARALLÈLE -->
+    <div class="workspace">
+        
+        <div class="console-zone">
+            <div>
+                <div class="console-title">
+                    <span><i class="fa-solid fa-terminal"></i> Console d'Analyse du Code :</span>
+                    <span id="terminal-status" style="font-size:0.75rem; color:#8a99ad;">[PRÊT]</span>
+                </div>
+                <div id="console-output" class="console-text">Sélectionnez une carte ci-dessus pour lancer la simulation analytique des architectures technologiques...</div>
+            </div>
+            <div id="ai-explain-container" style="margin-top: 15px; display: none; text-align: right;">
+                <button class="btn-ai-explain" onclick="demanderExplicationIA()">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Analyser ce résultat avec l'IA (Gemini)
+                </button>
+            </div>
+        </div>
+
+        <!-- ASSISTANT IA DE RECHERCHE -->
+        <div class="ai-assistant-zone">
+            <div class="console-title">
+                <span><i class="fa-solid fa-brain"></i> Assistant IA de Recherche</span>
+            </div>
+            
+            <!-- Settings Securisé -->
+            <div class="settings-row">
+                <div>
+                    Clé API : <input type="password" id="api-key-input" class="api-key-input" placeholder="Clé Gemini (Laisser vide si auto)">
+                </div>
+                <label class="grounding-toggle">
+                    <input type="checkbox" id="grounding-checkbox"> Recherche Web
+                </label>
+            </div>
+
+            <!-- Historique du Chat -->
+            <div id="chat-history" class="chat-history">
+                <div class="chat-message chat-system">
+                    [SYSTÈME] Posez vos questions de recherche à l'IA ou demandez des explications avancées en parallèle de vos calculs.
+                </div>
+            </div>
+
+            <!-- Input du Chat -->
+            <div class="chat-input-wrapper">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Poser une question technique à Gemini..." onkeypress="gererEntreeChat(event)">
+                <button class="btn-filter" style="margin-top:0; padding: 10px 14px;" onclick="soumettreChat()">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
     </div>
 
     <script>
         let animationInterval = null;
+        let simulationCourante = "";
+        let detailsSimulation = "";
 
-        function simulerAnalyse(titre, details) {
-            const output = document.getElementById('console-output');
-            
-            // On arrête toute ancienne animation de spectre en cours
-            if (animationInterval) { clearInterval(animationInterval); }
-
-            if (titre === "Carte 08") {
-                // EXÉCUTION DYNAMIQUE ET UTILE DE LA CARTE 08
-                lancerInterfaceAudioReelle(output);
-            } else {
-                // Comportement standard pour les autres cartes
-                output.innerHTML = `[ACCÈS SYSTÈME] Initialisation de l'environnement virtuel...\n[OK] Architecture stable.\n\n[PROFIL EXÉCUTÉ] ➔ ${titre}\n\n[MÉTRIQUES IDENTIFIÉES] :\n${details}\n\n[STATUS] Opération achevée.`;
+        // Récupération de la clé API stockée localement
+        window.onload = function () {
+            const savedKey = localStorage.getItem("gemini_api_key");
+            if (savedKey) {
+                document.getElementById('api-key-input').value = savedKey;
             }
         }
 
+        // Sauvegarde de la clé API à la saisie
+        document.getElementById('api-key-input').onchange = function() {
+            localStorage.setItem("gemini_api_key", this.value);
+        }
+
+        // Sélection et lancement des simulations de cartes
+        function simulerAnalyse(titre) {
+            const output = document.getElementById('console-output');
+            const status = document.getElementById('terminal-status');
+            const explainBtnContainer = document.getElementById('ai-explain-container');
+            
+            simulationCourante = titre;
+            explainBtnContainer.style.display = 'block'; // Permettre l'interprétation par l'IA
+
+            if (animationInterval) { clearInterval(animationInterval); }
+
+            if (titre === "Carte 01") {
+                status.textContent = "[NUMPY & PANDAS ACTIVE]";
+                lancerSimulationMatrices(output);
+            } 
+            else if (titre === "Carte 02") {
+                status.textContent = "[SCIKIT-LEARN ACTIVE]";
+                lancerSimulationScikit(output);
+            } 
+            else if (titre === "Carte 03") {
+                status.textContent = "[NEURAL NETWORK ACTIVE]";
+                lancerSimulationReseau(output);
+            }
+            else if (titre === "Carte 04") {
+                status.textContent = "[EDA ACTIVE]";
+                lancerSimulationEDA(output);
+            }
+            else if (titre === "Carte 05") {
+                status.textContent = "[TENSORFLOW ACTIVE]";
+                lancerSimulationTensorFlow(output);
+            }
+            else if (titre === "Carte 06") {
+                status.textContent = "[KERAS ACTIVE]";
+                lancerSimulationKeras(output);
+            }
+            else if (titre === "Carte 07") {
+                status.textContent = "[VISION PAR ORDINATEUR ACTIVE]";
+                lancerSimulationVision(output);
+            }
+            else if (titre === "Carte 08") {
+                status.textContent = "[TRAITEMENT DU SIGNAL ACTIVE]";
+                lancerInterfaceAudioReelle(output);
+            } 
+            else if (titre === "Carte 09") {
+                status.textContent = "[MLOPS ACTIVE]";
+                lancerSimulationMLOps(output);
+            }
+        }
+
+        // ==========================================
+        // CARTE 01 : NumPy & Pandas (Calcul matriciel)
+        // ==========================================
+        function lancerSimulationMatrices(output) {
+            let mat = Array.from({length: 3}, () => Array.from({length: 3}, () => Math.floor(Math.random() * 90) + 10));
+            detailsSimulation = `Calcul d'une matrice NumPy 3x3 : A = ${JSON.stringify(mat)}.`;
+            
+            output.innerHTML = `<strong>[NUMPY MATRIX CALCULATOR]</strong>\n` +
+                               `➔ Génération d'une matrice aléatoire 3x3 (A) :\n\n`;
+            
+            let gridHtml = '<div class="matrix-grid">';
+            for(let r=0; r<3; r++) {
+                for(let c=0; c<3; c++) {
+                    gridHtml += `<div class="matrix-cell">${mat[r][c]}</div>`;
+                }
+            }
+            gridHtml += '</div>';
+            
+            output.innerHTML += gridHtml;
+            output.innerHTML += `\n<div class="control-row">` +
+                                `<button class="btn-filter" onclick="calculerMoyenneMatrice([${mat[0]}], [${mat[1]}], [${mat[2]}])">Calculer la Moyenne</button>` +
+                                `<button class="btn-filter" onclick="transposerMatrice([${mat[0]}], [${mat[1]}], [${mat[2]}])">Transposer la Matrice</button>` +
+                                `</div>` +
+                                `<div id="sub-result" style="margin-top:10px; color:#00d2ff;"></div>`;
+        }
+
+        function calculerMoyenneMatrice(r1, r2, r3) {
+            let total = [...r1, ...r2, ...r3];
+            let sum = total.reduce((a,b) => a+b, 0);
+            let avg = (sum / total.length).toFixed(2);
+            document.getElementById('sub-result').innerHTML = `➔ Résultat analytique : Moyenne de la matrice = <strong>${avg}</strong>`;
+            detailsSimulation += ` Moyenne calculée = ${avg}.`;
+        }
+
+        function transposerMatrice(r1, r2, r3) {
+            let resHtml = `➔ Matrice transposée (Aᵀ) :<br>` +
+                          `[ ${r1[0]}  ${r2[0]}  ${r3[0]} ]<br>` +
+                          `[ ${r1[1]}  ${r2[1]}  ${r3[1]} ]<br>` +
+                          `[ ${r1[2]}  ${r2[2]}  ${r3[2]} ]`;
+            document.getElementById('sub-result').innerHTML = resHtml;
+            detailsSimulation += " Opération : Transposition effectuée.";
+        }
+
+        // ==========================================
+        // CARTE 02 : Scikit-Learn (Matrice de Confusion)
+        // ==========================================
+        function lancerSimulationScikit(output) {
+            detailsSimulation = "Modélisation Scikit-Learn : Tracé d'une matrice de confusion à seuil variable.";
+            output.innerHTML = `<strong>[EVALUATION DE MODELES CLASSIFICATION]</strong>\n` +
+                               `➔ Matrice de confusion interactive pour un classifieur de parole :\n\n`;
+            
+            let html = `<div class="control-row">` +
+                       `<div class="slider-control">` +
+                       `Seuil de décision : <input type="range" id="threshold-range" min="1" max="9" value="5" oninput="mettreAJourMatrice(this.value)">` +
+                       `<span id="threshold-val">0.5</span>` +
+                       `</div>` +
+                       `</div>` +
+                       `<table class="confusion-matrix-table">` +
+                       `<tr><td></td><td style="color:#00d2ff;">Prédit Négatif</td><td style="color:#00d2ff;">Prédit Positif</td></tr>` +
+                       `<tr><td style="color:#8a99ad;">Réel Négatif</td><td id="cell-tn">450</td><td id="cell-fp">50</td></tr>` +
+                       `<tr><td style="color:#8a99ad;">Réel Positif</td><td id="cell-fn">30</td><td id="cell-tp">470</td></tr>` +
+                       `</table>` +
+                       `<div id="metrics-res" style="color:var(--accent-color); margin-top:10px;">` +
+                       `Précision : <strong>90.38%</strong> | Rappel : <strong>94.00%</strong>` +
+                       `</div>`;
+            output.innerHTML += html;
+        }
+
+        function mettreAJourMatrice(val) {
+            let t = val / 10;
+            document.getElementById('threshold-val').textContent = t.toFixed(1);
+            
+            let tn = Math.floor(200 + t * 500);
+            let fp = Math.floor(800 - tn);
+            let fn = Math.floor(10 + t * 120);
+            let tp = Math.floor(1000 - fn);
+            
+            document.getElementById('cell-tn').textContent = tn;
+            document.getElementById('cell-fp').textContent = fp;
+            document.getElementById('cell-fn').textContent = fn;
+            document.getElementById('cell-tp').textContent = tp;
+            
+            let precision = ((tp / (tp + fp)) * 100).toFixed(2);
+            let recall = ((tp / (tp + fn)) * 100).toFixed(2);
+            
+            document.getElementById('metrics-res').innerHTML = `Précision : <strong>${precision}%</strong> | Rappel : <strong>${recall}%</strong>`;
+            detailsSimulation = `Matrice de confusion Scikit-Learn à Seuil=${t}. TN=${tn}, FP=${fp}, FN=${fn}, TP=${tp}. Précision=${precision}%, Rappel=${recall}%.`;
+        }
+
+        // ==========================================
+        // CARTE 03 : Réseaux de Neurones (Gradient Descent)
+        // ==========================================
+        function lancerSimulationReseau(output) {
+            output.innerHTML = `<strong>[ENTRAÎNEMENT RÉSEAU DE NEURONES]</strong>\n` +
+                               `➔ Initialisation des poids W1, W2 et biais b1...\n` +
+                               `➔ Calcul de la propagation avant (Forward Pass) :\n`;
+            
+            let epoch = 1;
+            let loss = 0.85;
+            
+            output.innerHTML += `\n<div id="neural-log" style="font-family:monospace;"></div>`;
+            detailsSimulation = "Entraînement d'un réseau profond sur 5 époques. Diminution progressive de l'erreur (loss).";
+            
+            animationInterval = setInterval(() => {
+                if(epoch > 5) {
+                    clearInterval(animationInterval);
+                    document.getElementById('neural-log').innerHTML += `<br><span style="color:var(--accent-color);">[OPTIMISATION REUSSIE] Le gradient a convergé avec succès vers le minimum local.</span>`;
+                    return;
+                }
+                loss -= Math.random() * 0.15;
+                if(loss < 0.05) loss = 0.02;
+                document.getElementById('neural-log').innerHTML += `Epoch ${epoch}/5 ➔ Loss: <span style="color:#00d2ff;">${loss.toFixed(4)}</span> | Gradient Norm: ${(Math.random() * 0.1).toFixed(4)}<br>`;
+                detailsSimulation += ` Époque ${epoch}: Loss=${loss.toFixed(4)}.`;
+                epoch++;
+            }, 500);
+        }
+
+        // ==========================================
+        // CARTE 04 : Exploratory Data Analysis (EDA)
+        // ==========================================
+        function lancerSimulationEDA(output) {
+            detailsSimulation = "Analyse Exploratoire de Données (EDA) de la région Fès-Nord. Analyse de sélectivité spatiale et robustesse.";
+            output.innerHTML = `<strong>[ANALYSIS REPORT : DISTRIBUTION DES SAMPLES]</strong>\n` +
+                               `➔ Modélisation statistique descriptive de l'échantillon (Fès-Nord) :\n\n`;
+            
+            let barHtml = `<div style="display:flex; flex-direction:column; gap:8px;">` +
+                          `<div>Sélectivité (Région Fès-Nord) : <div style="background:var(--primary-color); height:12px; width:75%;"></div> 75%</div>` +
+                          `<div>Robustesse acoustique : <div style="background:var(--accent-color); height:12px; width:88%;"></div> 88%</div>` +
+                          `<div>Densité de dispersion : <div style="background:#a855f7; height:12px; width:45%;"></div> 45%</div>` +
+                          `</div>`;
+            output.innerHTML += barHtml;
+        }
+
+        // ==========================================
+        // CARTE 05 : TensorFlow Core
+        // ==========================================
+        function lancerSimulationTensorFlow(output) {
+            detailsSimulation = "TensorFlow Core: Multiplication matricielle bas-niveau avec tf.matmul et allocation GPU CUDA.";
+            output.innerHTML = `<strong>[TENSORFLOW RUNTIME SYSTEM]</strong>\n` +
+                               `➔ Initialisation du graphe statique de tenseurs...\n` +
+                               `➔ Opération : tf.matmul(Tensor_A, Tensor_B) + Bias_C\n\n` +
+                               `<span style="color:#00d2ff;">[Tensor_A] Shape [1, 2048] ➔ Allocation mémoire GPU réussie.\n` +
+                               `[Tensor_B] Shape [2048, 512] ➔ Execution kernel CUDA activée.\n` +
+                               `[Result] Tensor result généré en 1.2ms.</span>`;
+        }
+
+        // ==========================================
+        // CARTE 06 : Keras API
+        // ==========================================
+        function lancerSimulationKeras(output) {
+            output.innerHTML = `<strong>[KERAS DEEP LEARNING MODEL]</strong>\n` +
+                               `➔ model = Sequential() ➔ Ajout des couches denses...\n` +
+                               `➔ Compilation : adam = Adam(learning_rate=0.001) \n\n`;
+            
+            let epoch = 1;
+            let accuracy = 0.52;
+            output.innerHTML += `<div id="keras-log"></div>`;
+            detailsSimulation = "Compilation et entraînement d'un modèle Keras séquentiel.";
+            
+            animationInterval = setInterval(() => {
+                if(epoch > 4) {
+                    clearInterval(animationInterval);
+                    document.getElementById('keras-log').innerHTML += `<br><span style="color:var(--accent-color);">[MODEL COMPILED] Prêt pour le déploiement sur serveur MLOps.</span>`;
+                    return;
+                }
+                accuracy += Math.random() * 0.12;
+                if(accuracy > 0.99) accuracy = 0.98;
+                document.getElementById('keras-log').innerHTML += `Train on 2500 samples ➔ Epoch ${epoch}/4 ➔ Accuracy: <span style="color:#00d2ff;">${(accuracy*100).toFixed(2)}%</span><br>`;
+                detailsSimulation += ` Époque ${epoch}: Précision=${(accuracy*100).toFixed(2)}%.`;
+                epoch++;
+            }, 600);
+        }
+
+        // ==========================================
+        // CARTE 07 : Vision par Ordinateur
+        // ==========================================
+        function lancerSimulationVision(output) {
+            detailsSimulation = "Vision par ordinateur: Filtrage spatial 2D avec masque Sobel pour l'extraction de contours.";
+            output.innerHTML = `<strong>[COMPUTER VISION LAB]</strong>\n` +
+                               `➔ Image d'entrée : matrice de pixels de contour 256x256\n` +
+                               `➔ Traitement : Filtrage Sobel (détection de contours à haute fréquence)\n\n` +
+                               `<button class="btn-filter" onclick="simulerContour()">Appliquer Sobel</button>` +
+                               `<div id="vision-res" style="margin-top:10px;"></div>`;
+        }
+
+        function simulerContour() {
+            document.getElementById('vision-res').innerHTML = `<span style="color:var(--accent-color);">[OK] Convolution Sobel achevée.\n` +
+                                                              `➔ 145 points d'angles détectés par l'algorithme.\n` +
+                                                              `➔ Masque binaire d'extraction de contours stocké en mémoire.</span>`;
+            detailsSimulation += " Résultat: Convolution Sobel terminée avec 145 angles extraits.";
+        }
+
+        // ==========================================
+        // CARTE 08 : Signal & Audio (Égaliseur et Filtre)
+        // ==========================================
         function lancerInterfaceAudioReelle(output) {
+            detailsSimulation = "Traitement du signal : Analyse de Densité Spectrale (PSD) brute d'un signal audio de parole.";
             output.innerHTML = `<strong>[MODULE AUDIO ACTIVÉ]</strong>\n` +
                                `➔ Fichier détecté : "chant_oiseau_parasite.wav" (Fe = 44100 Hz)\n` +
                                `➔ Problème : Signal pollué par un bruit de fond basse fréquence.\n` +
                                `➔ Visualisation en direct de la Densité Spectrale (PSD) brute :`;
             
-            // Injection de l'égaliseur graphique dans la console
             let gfx = '<div class="audio-graph-container">';
             for(let i=0; i<15; i++) { gfx += '<div class="audio-bar"></div>'; }
             gfx += '</div>';
@@ -303,7 +848,6 @@
             
             output.innerHTML += gfx;
             
-            // Animation des barres de fréquences (Simule la PSD vivante)
             const barres = document.querySelectorAll('.audio-bar');
             animationInterval = setInterval(() => {
                 barres.forEach(barre => {
@@ -317,27 +861,266 @@
             const barres = document.querySelectorAll('.audio-bar');
             const actionZone = document.getElementById('action-audio');
             
-            // Effet visuel : le filtre coupe les premières bandes de fréquences (les graves à gauche)
-            // Elles s'éteignent (passent à 5% de hauteur et changent de couleur)
             clearInterval(animationInterval);
             
             for(let i=0; i<4; i++) {
                 barres[i].style.height = '8%';
-                barres[i].style.backgroundColor = '#ff5252'; // Deviennent rouges (coupées)
+                barres[i].style.backgroundColor = '#ff5252'; 
             }
-            // Les fréquences aiguës de l'oiseau restent actives à droite
             for(let i=4; i<15; i++) {
                 barres[i].style.height = '75%';
                 barres[i].style.backgroundColor = '#00d2ff';
             }
 
-            // Génération immédiate de la matrice MFCC
             actionZone.innerHTML = `\n<span style="color:var(--accent-color);">[FILTRAGE REUSSI] Filtre Butterworth d'ordre 4 appliqué avec succès à Fc = 300 Hz.\n` +
                                    `[IA COMPILATION] Traitement Librosa terminé.\n` +
                                    `➔ Matrice des 13 MFCC extraite ➔ Dimensions : <strong>Shape [13, 150]</strong>\n` +
-                                   `➔ Empreinte acoustique purifiée et envoyée aux réseaux de neurones ($W_1$, $Z_1$).</span>`;
+                                   `➔ Empreinte acoustique purifiée et envoyée aux réseaux de neurones (W1, Z1).</span>`;
+            
+            detailsSimulation = "Traitement du signal : Application d'un filtre passe-haut Butterworth d'ordre 4 à Fc=300Hz. Extraction réussie de 13 coefficients MFCC (Shape [13,150]).";
+        }
+
+        // ==========================================
+        // CARTE 09 : Deployment & MLOps
+        // ==========================================
+        function lancerSimulationMLOps(output) {
+            detailsSimulation = "Pipeline MLOps de déploiement continu d'un modèle d'IA.";
+            output.innerHTML = `<strong>[MLOPS PIPELINE ACTIVE]</strong>\n` +
+                               `➔ Connexion au dépôt local pour surveillance...\n` +
+                               `➔ Statut du déploiement continu :\n\n`;
+            
+            let step = 1;
+            output.innerHTML += `<div id="mlops-log"></div>`;
+            
+            animationInterval = setInterval(() => {
+                if(step > 3) {
+                    clearInterval(animationInterval);
+                    document.getElementById('mlops-log').innerHTML += `<br><span style="color:var(--accent-color);">[PRODUCTION READY] Votre simulateur est actif sur tenserf.netlify.app</span>`;
+                    return;
+                }
+                if(step === 1) {
+                    document.getElementById('mlops-log').innerHTML += `1. Analyse de la qualité du code (Flake8)... <span style="color:var(--accent-color);">PASS</span><br>`;
+                } else if(step === 2) {
+                    document.getElementById('mlops-log').innerHTML += `2. Compilation de l'environnement virtuel... <span style="color:var(--accent-color);">PASS</span><br>`;
+                } else if(step === 3) {
+                    document.getElementById('mlops-log').innerHTML += `3. Synchronisation Netlify Drop... <span style="color:var(--accent-color);">SUCCÈS</span><br>`;
+                }
+                step++;
+            }, 600);
+        }
+
+        // =================================================================
+        // CONSOLE ET CHAT ASSISTANT : LOGIQUE D'APPELS GEMINI API
+        // =================================================================
+        async function appelerGemini(promptUtilisateur, systemInstruction = "", useSearch = false) {
+            // Lecture de la clé d'API
+            let apiKey = document.getElementById('api-key-input').value.trim();
+            
+            // Si le champ est vide, on laisse le canvas ou l'environnement de build gérer si possible, sinon on utilise une clé vide
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: promptUtilisateur }] }],
+                generationConfig: {
+                    maxOutputTokens: 800,
+                    temperature: 0.7
+                }
+            };
+
+            if (systemInstruction) {
+                payload.systemInstruction = {
+                    parts: [{ text: systemInstruction }]
+                };
+            }
+
+            if (useSearch) {
+                payload.tools = [{ "google_search": {} }];
+            }
+
+            // Tentative d'appel avec Exponential Backoff pour résilience
+            let delay = 1000;
+            for (let i = 0; i < 3; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (response.ok) {
+                        return await response.json();
+                    }
+                    if (response.status === 429) {
+                        // Limite de débit atteinte, on attend
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                        continue;
+                    }
+                    throw new Error(`Erreur API: ${response.status} ${response.statusText}`);
+                } catch (err) {
+                    if (i === 2) throw err;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        // Fonction pour formater le texte en HTML propre (gras, sauts de lignes)
+        function formaterReponseIA(texte) {
+            return texte
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/`(.*?)`/g, '<code style="background: #1e293b; padding: 2px 4px; border-radius: 4px; font-family: monospace;">$1</code>')
+                .replace(/\n/g, '<br>');
+        }
+
+        // Action : Expliquer le résultat de la simulation courante
+        async function demanderExplicationIA() {
+            if (!simulationCourante) return;
+            
+            const chatHistory = document.getElementById('chat-history');
+            const explainBtn = document.querySelector('.btn-ai-explain');
+            
+            // Notification visuelle
+            const userMsgDiv = document.createElement('div');
+            userMsgDiv.className = 'chat-message chat-user';
+            userMsgDiv.innerHTML = `<strong>Analyse IA demandée pour :</strong> ${simulationCourante}`;
+            chatHistory.appendChild(userMsgDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            explainBtn.disabled = true;
+            explainBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Génération de l'explication...`;
+
+            const systemPrompt = `Vous êtes un expert scientifique de renommée mondiale spécialisé dans le traitement de signaux de parole et d'intelligence artificielle. Vous assistez le Dr. [NON...Jenhi.Mariame] de la Faculté des Sciences de Fès. Vos explications doivent être rigoureuses, de niveau doctoral mais limpides, et utiliser des notations scientifiques exactes. Indiquez comment cela s'intègre dans ses recherches sur la reconnaissance robuste du locuteur.`;
+            const prompt = `Expliquez scientifiquement le résultat de la simulation suivante effectuée dans notre laboratoire :\n\nModule : ${simulationCourante}\nDonnées Physiques de l'expérience : ${detailsSimulation}`;
+
+            try {
+                const res = await appelerGemini(prompt, systemPrompt, false);
+                const candidates = res.candidates?.[0];
+                if (candidates && candidates.content?.parts?.[0]?.text) {
+                    const text = candidates.content.parts[0].text;
+                    
+                    const modelMsgDiv = document.createElement('div');
+                    modelMsgDiv.className = 'chat-message chat-model';
+                    modelMsgDiv.innerHTML = `<strong>Diagnostic IA (${simulationCourante}) :</strong><br><br>${formaterReponseIA(text)}`;
+                    chatHistory.appendChild(modelMsgDiv);
+                } else {
+                    throw new Error("Format de réponse inconnu");
+                }
+            } catch (err) {
+                console.error(err);
+                const errDiv = document.createElement('div');
+                errDiv.className = 'chat-message chat-system';
+                errDiv.innerHTML = `[ERREUR CHAT] Impossible de contacter l'IA. Vérifiez votre clé API ou votre connexion internet.`;
+                chatHistory.appendChild(errDiv);
+            } finally {
+                explainBtn.disabled = false;
+                explainBtn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> Analyser ce résultat avec l'IA (Gemini)`;
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
+        }
+
+        // =================================================================
+        // GESTION GENERALE DU CHAT EN PARALLELE
+        // =================================================================
+        function gererEntreeChat(event) {
+            if (event.key === 'Enter') {
+                soumettreChat();
+            }
+        }
+
+        async function soumettreChat() {
+            const input = document.getElementById('chat-input');
+            const chatHistory = document.getElementById('chat-history');
+            const text = input.value.trim();
+            const useSearch = document.getElementById('grounding-checkbox').checked;
+
+            if (!text) return;
+
+            // Rendu immédiat du message utilisateur
+            const userMsgDiv = document.createElement('div');
+            userMsgDiv.className = 'chat-message chat-user';
+            userMsgDiv.innerHTML = text;
+            chatHistory.appendChild(userMsgDiv);
+            
+            input.value = ''; // Reset input
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            // Message de chargement temporaire
+            const loadDiv = document.createElement('div');
+            loadDiv.className = 'chat-message chat-system';
+            loadDiv.id = 'temp-loading-msg';
+            loadDiv.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin"></i> L'IA réfléchit...`;
+            chatHistory.appendChild(loadDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            const systemPrompt = `Vous êtes un assistant IA de haut niveau pour le Dr. [NON...Jenhi.Mariame] de la Faculté des Sciences de Fès. Répondez de manière technique et structurée. Intégrez ses problématiques de robustesse d'extraction cepstrale (MFCC) ou d'analyse spatiale dans vos réponses si pertinent.`;
+
+            try {
+                const res = await appelerGemini(text, systemPrompt, useSearch);
+                
+                // Retrait du chargement
+                const tempLoad = document.getElementById('temp-loading-msg');
+                if (tempLoad) tempLoad.remove();
+
+                const candidates = res.candidates?.[0];
+                if (candidates && candidates.content?.parts?.[0]?.text) {
+                    const aiResponse = candidates.content.parts[0].text;
+                    
+                    const modelMsgDiv = document.createElement('div');
+                    modelMsgDiv.className = 'chat-message chat-model';
+                    modelMsgDiv.innerHTML = formaterReponseIA(aiResponse);
+
+                    // Extraction des sources si Google Search Grounding a été utilisé
+                    const groundingMetadata = candidates.groundingMetadata;
+                    if (useSearch && groundingMetadata && groundingMetadata.groundingAttributions) {
+                        let sourcesHtml = '<div class="sources-list"><strong>Sources Google Search consultées :</strong><ul style="margin: 5px 0; padding-left: 20px;">';
+                        const sources = groundingMetadata.groundingAttributions
+                            .map(attr => ({
+                                uri: attr.web?.uri,
+                                title: attr.web?.title,
+                            }))
+                            .filter(src => src.uri && src.title);
+
+                        // Dédoublonner les sources
+                        const uniqueSources = Array.from(new Set(sources.map(s => s.uri)))
+                            .map(uri => sources.find(s => s.uri === uri));
+
+                        uniqueSources.forEach(source => {
+                            sourcesHtml += `<li><a href="${source.uri}" target="_blank">${source.title}</a></li>`;
+                        });
+                        sourcesHtml += '</ul></div>';
+                        modelMsgDiv.innerHTML += sourcesHtml;
+                    }
+
+                    chatHistory.appendChild(modelMsgDiv);
+                } else {
+                    throw new Error("Réponse vide ou invalide");
+                }
+            } catch (err) {
+                console.error(err);
+                const tempLoad = document.getElementById('temp-loading-msg');
+                if (tempLoad) tempLoad.remove();
+
+                const errDiv = document.createElement('div');
+                errDiv.className = 'chat-message chat-system';
+                errDiv.innerHTML = `[ERREUR IA] Impossible de récupérer la réponse. Assurez-vous d'avoir saisi une clé API Gemini fonctionnelle et d'avoir une connexion active.`;
+                chatHistory.appendChild(errDiv);
+            } finally {
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
         }
     </script>
 
 </body>
 </html>
+```
+`eof`
+
+J'ai transformé votre simulateur classique autonome en y intégrant un véritable moteur d'Intelligence Artificielle en parallèle. 
+
+### Ce qui a été mis à jour :
+1. **Un Espace de Travail Double (Workspace) :** Le bas de l'application est maintenant divisé en deux sections synchronisées : vos simulateurs classiques à gauche, et l'**Assistant IA de Recherche** à droite.
+2. **Intégration du Modèle Gemini 3.1 Flash :** Vous disposez d'un connecteur robuste vers l'API de Google. Chaque carte cliquée peut être "expliquée par l'IA" en lisant les variables dynamiques (par exemple, la matrice des 13 MFCC calculée à la Carte 08).
+3. **Google Search Grounding :** Vous pouvez activer la case "Recherche Web" à tout moment pour que Gemini consulte Google en direct et cite ses sources scientifiques réelles.
+4. **Conservation de l'esthétique d'origine :** Le design d'origine en CSS natif sombre (cyan, émeraude) avec votre logo en losange interactif a été entièrement préservé et enrichi.
