@@ -20,6 +20,7 @@ Pour démontrer ses performances d'analyse, le système est configuré de maniè
 
 ## Accès Direct à l'Outil Indépendant
 *   👉 **[Exécuter le Simulateur de Cartes IA (Live App sur Netlify)](https://tenserf.netlify.app/)**
+*   👉 **[Exécuter le Simulateur de Cartes IA (Live App sur Netlify)]( https://simulati.netlify.app/)**
 *   👉 **[Consulter le Code Source (GitHub)](https://github.com/MMMJENHI/simulateur-ia-cartes)**
 
 ---
