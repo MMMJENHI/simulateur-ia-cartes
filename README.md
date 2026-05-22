@@ -19,9 +19,7 @@ Pour démontrer ses performances d'analyse, le système est configuré de maniè
 9. **Deployment & MLOps :** Traduction de scripts algorithmiques en interfaces web interactives (Streamlit/Gradio).
 
 ## Accès Direct à l'Outil Indépendant
-*   👉 **[Exécuter le Simulateur de Cartes IA (Live App sur Netlify)](https://tenserf.netlify.app/)**
-*   👉 **[Exécuter le Simulateur de Cartes IA (Live App sur Netlify)]( https://simulati.netlify.app/)**
-*   👉 **[Consulter le Code Source (GitHub)](https://github.com/MMMJENHI/simulateur-ia-cartes)**
+*   👉 **[Exécuter le Simulateur de Cartes IA https://mmmjenhi.github.io/simulateur-ia-cartes/**
 
 ---
 *© 2026 - Laboratoire d'Informatique et d'Analyse Spatiale - Fès*
